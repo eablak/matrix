@@ -19,20 +19,29 @@ class Vector:
             self.vector[i] = self.vector[i] * scalar
 
 
-if __name__ == "__main__":
-    
-    u = Vector([2, 3])
-    v = Vector([5, 7])
-    
+    def linear_combination(self, vectors ,coefs):
 
-    """
-    
-    # Ex00 Testing
+        i = 0
+        temp = []
+        vector_len = 0
+        for vector in vectors:
+            temp_list = []
+            vector_len = len(vector.vector)
+            for v in vector.vector:
+                temp_list.append(v * coefs[i])
+            i += 1
+            temp.append(Vector(temp_list))
 
-    u.add(v)
-    u.subtraction(v)
-    u.scaling(2)
+        # for t in temp:
+        #     print(t.vector)
+
+        combination_vector = Vector([0] * vector_len)
+
+        for i in range(vector_len):
+            sum = 0
+            for t in temp:
+                sum += t.vector[i]
+            combination_vector.vector[i] = sum
+
+        return combination_vector
     
-    
-    """
-    print(u.vector)
