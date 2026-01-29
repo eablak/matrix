@@ -10,8 +10,8 @@ if __name__ == "__main__":
     v = Vector([5, 7])
     
 
-    u.add(v)
-    u.subtraction(v)
+    # u.add(v)
+    # u.subtraction(v)
     u.scaling(2)
     
     print(u.vector)
