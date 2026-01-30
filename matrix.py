@@ -11,30 +11,30 @@ class Matrix:
         # type check
         for dim in self.matrix:
             if type(dim) != list:
-                sys.exit("Result is undefined1")
+                raise TypeError("Result is undefined")
 
         for dim in matrix2.matrix:
             if type(dim) != list:
-                sys.exit("Result is undefined2")
+                raise TypeError("Result is undefined")
 
         # size check
 
         if len(self.matrix) != len(matrix2.matrix):
-            sys.exit("Result is undefined3")
+            raise TypeError("Result is undefined")
 
         elem_count = 0
         for i in range(len(self.matrix)):
             if elem_count == 0:
                 elem_count = len(self.matrix[i])
             if len(self.matrix[i]) != elem_count or len(matrix2.matrix[i]) != elem_count:
-                sys.exit("Result is undefined!")
+                raise TypeError("Result is undefined")
             if len(self.matrix[i]) != len(matrix2.matrix[i]):
-                sys.exit("Result is undefined!!")
+                raise TypeError("Result is undefined")
 
 
     def check_scalar(self, scalar):
         if type(scalar) != int and type(scalar) != float:
-            sys.exit("Result is undefined5")
+            raise TypeError("Result is undefined")
 
 
     def add(self, matrix2):
@@ -57,3 +57,27 @@ class Matrix:
             for i in range(len(self.matrix[dim])):
                 self.matrix[dim][i] = self.matrix[dim][i] * scalar
 
+    def check_lerp(self, u, v, t):
+        if (type(u) != Matrix or type(v) != Matrix or (type(t) != int and type(t) != float)):
+            raise TypeError("Result is undefined")
+        
+        if (len(self.matrix) != len(u.matrix) or len(self.matrix) != len(u.matrix)):
+            raise TypeError("Result is undefined")
+
+        elem_count = 0
+        for dim in range(len(self.matrix)):
+            if elem_count == 0:
+                elem_count = len(self.matrix[dim])
+            if len(self.matrix[dim]) != elem_count or len(u.matrix[dim]) != elem_count or len(v.matrix[dim]) != elem_count:
+                raise TypeError("Result is undefined")
+            
+
+    def lerp(self, u, v, t):
+        
+        self.check_lerp(u,v,t)
+
+        for dim in range(len(u.matrix)):
+            for i in range(len(u.matrix[dim])):
+                self.matrix[dim][i] = u.matrix[dim][i] + t * (v.matrix[dim][i] - u.matrix[dim][i])
+        
+        return self.matrix

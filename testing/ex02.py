@@ -3,17 +3,26 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from scalar import Scalar
 from vector import Vector
+from matrix import Matrix
 
-vector = Vector([0,0,0])
+u = 21
+v = 42
+t = 0.3
 
-e1 = Vector([1,0,0])
-e2 = Vector([0,1,0])
-e3 = Vector([0,0,1])
+scalar = Scalar()
+# print(scalar.lerp(u, v, t))
 
-v1 = Vector([1, 2, 3])
-v2 = Vector([0, 10, -100])
+vector = Vector([0,0])
+u = Vector([2,1])
+v = Vector([4,2])
+t = 0.3
 
-# combination_vector = vector.linear_combination([e1, e2, e3], [10, -2, 0.5])
-combination_vector = vector.linear_combination([v1, v2], [10, -2])
-print(combination_vector.vector)
+# print(vector.lerp(u,v,t))
+
+matrix = Matrix([[0,0], [0,0]])
+u = Matrix([[2,1], [3, 4]])
+v = Matrix([[20,10], [30, 40]])
+t = 0.5
+print(matrix.lerp(u,v,t))
