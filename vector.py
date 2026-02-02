@@ -115,11 +115,11 @@ class Vector:
         return res
     
 
-    def norm_1(self, u):
+    def norm_1(self):
         
         norm1 = 0
 
-        for elem in u.vector:
+        for elem in self.vector:
             if elem < 0:
                 elem = elem * -1
             norm1 += elem
@@ -127,19 +127,19 @@ class Vector:
         return norm1
     
 
-    def norm(self, u):
+    def norm(self):
         
         res = 0
-        for elem in u.vector:
+        for elem in self.vector:
             res += pow(elem,2)
 
         return res ** 0.5
     
 
-    def norm_inf(self, u):
+    def norm_inf(self):
         
         norm_inf = 0
-        for elem in u.vector:
+        for elem in self.vector:
             if elem < 0:
                 elem = elem * -1
             if elem > norm_inf:
