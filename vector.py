@@ -101,3 +101,49 @@ class Vector:
             returnVector.vector[i] = u.vector[i] +  t * (v.vector[i] - u.vector[i])
         
         return returnVector.vector
+    
+
+    def dot(self, u, v):
+        
+        if (self.returnSize(u.vector) != self.returnSize(v.vector)):
+            raise TypeError("Result is undefined")
+        
+        res = 0
+        for i in range(len(u.vector)):
+            res += u.vector[i] * v.vector[i]
+
+        return res
+    
+
+    def norm_1(self, u):
+        
+        norm1 = 0
+
+        for elem in u.vector:
+            if elem < 0:
+                elem = elem * -1
+            norm1 += elem
+        
+        return norm1
+    
+
+    def norm(self, u):
+        
+        res = 0
+        for elem in u.vector:
+            res += pow(elem,2)
+
+        return res ** 0.5
+    
+
+    def norm_inf(self, u):
+        
+        norm_inf = 0
+        for elem in u.vector:
+            if elem < 0:
+                elem = elem * -1
+            if elem > norm_inf:
+                norm_inf = elem
+
+        return norm_inf
+    
