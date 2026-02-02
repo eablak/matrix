@@ -5,5 +5,6 @@ class Scalar:
             raise TypeError("Result is undefined")
 
     def lerp(self, u, v, t):
+        
         self.check_lerp(u,v,t)
         return u + t * (v-u)
