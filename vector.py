@@ -19,6 +19,14 @@ class Vector:
         vector = Vector([])
         vector.vector = [0] * sizes
         return vector
+    
+    
+    def checkNullity(self, vector):
+
+        for v in vector.vector:
+            if v != 0:
+                return 1
+        return 0
 
 
     def add(self, vector2):
@@ -147,3 +155,19 @@ class Vector:
 
         return norm_inf
     
+
+    def angle_cos(self, u, v):
+        
+        if (self.checkNullity(u) == 0 or self.checkNullity(v) == 0):
+            raise TypeError("Result is undefined")
+        if (self.returnSize(u.vector) != self.returnSize(v.vector)):
+            raise TypeError("Result is undefined")
+
+        dividend = self.dot(u,v)
+        divisor = u.norm() * v.norm()
+
+        # print(dividend)
+        # print(divisor)
+
+        return dividend/divisor
+
