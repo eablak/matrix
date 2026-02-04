@@ -170,4 +170,22 @@ class Vector:
         # print(divisor)
 
         return dividend/divisor
+    
+
+    def cross_product(self, u, v):
+
+        if (self.returnSize(u.vector) != self.returnSize(v.vector) or self.returnSize(u.vector) != 3):
+            raise TypeError("Result is undifined")
+    
+        vector = self.createReturnVector(self.returnSize(u.vector))
+
+        i = (u.vector[1] * v.vector[2]) - (u.vector[2] * v.vector[1])
+        j = (u.vector[2] * v.vector[0]) - (u.vector[0] * v.vector[2])
+        k = (u.vector[0] * v.vector[1]) - (u.vector[1] * v.vector[0])
+
+        vector.vector[0] = i
+        vector.vector[1] = j
+        vector.vector[2] = k
+
+        return vector.vector
 
