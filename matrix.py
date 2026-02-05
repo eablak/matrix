@@ -135,3 +135,14 @@ class Matrix:
                     matrix.matrix[i][j] += self.matrix[i][k] * v.matrix[k][j]
     
         return matrix.matrix
+
+
+    def trace(self):
+
+        index, trace = 0, 0
+        for row in self.matrix:
+            trace += row[index]
+            index+=1
+
+        return trace
+        
