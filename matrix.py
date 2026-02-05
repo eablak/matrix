@@ -1,4 +1,5 @@
 import sys
+import os
 
 class Matrix:
 
@@ -107,3 +108,30 @@ class Matrix:
                 returnMatrix.matrix[dim][i] = u.matrix[dim][i] + t * (v.matrix[dim][i] - u.matrix[dim][i])
         
         return returnMatrix.matrix
+
+
+    def mul_vec(self, v):
+        
+        vector = v.createReturnVector(v.returnSize(v.vector))
+
+        index = 0
+        for row in self.matrix:
+            elem = 0
+            for i in range(len(row)):
+                elem += row[i] * v.vector[i]
+            vector.vector[index] = elem
+            index += 1
+
+        return vector.vector
+        
+    
+    def mul_mat(self, v):
+        
+        matrix = self.createReturnMatrix(self.returnMatrixDimSizes(self))
+
+        for i in range(len(self.matrix)):
+            for j in range(len(v.matrix[0])):
+                for k in range(len(v.matrix)):
+                    matrix.matrix[i][j] += self.matrix[i][k] * v.matrix[k][j]
+    
+        return matrix.matrix
