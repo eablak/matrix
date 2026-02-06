@@ -146,3 +146,22 @@ class Matrix:
 
         return trace
         
+
+    def transpoze(self):
+        
+        tr = []
+        tr_sizes = []
+        for i in range(len(self.matrix[0])):
+            tr_list = []
+            for row in (self.matrix):
+                tr_list.append(row[i])
+            tr.append(tr_list)
+            tr_sizes.append(len(tr_list))
+        
+
+        matrix = self.createReturnMatrix(tr_sizes)
+        for i in range(len(matrix.matrix)):
+            matrix.matrix[i] = tr[i]
+        
+        return matrix.matrix
+    
