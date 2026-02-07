@@ -165,3 +165,66 @@ class Matrix:
         
         return matrix.matrix
     
+
+    def row_echelon(self):
+        
+        # this function works as a reduced row echelon form (rref). accordingly ex10 and evo page examples
+
+        mmatrix = self.matrix
+        row_len = len(mmatrix)
+        col_len = len(mmatrix[0])
+        locked_rows = []  # this is for step 2
+
+        # step 1: iterate over the column starting from the left
+        for col_i in range(col_len):
+            
+            # step 2a: select the pivot row
+            pivot_row_i = -1
+
+            for row_i in range(row_len):
+
+                # skip this row value, because we are going to zero it out anyway
+                if row_i in locked_rows:
+                    continue
+
+                # check if the current element is non zero
+                if mmatrix[row_i][col_i] != 0:
+                    pivot_row_i = row_i
+                    break
+
+            # we know the indice of the pivot_row_i
+            if pivot_row_i == -1:
+                continue
+
+            # step 2b: bring the pivot row to the next locked_row indices
+            next_pivot_row_i = (locked_rows[-1] + 1) if len(locked_rows) > 0 else 0
+
+
+            if pivot_row_i != next_pivot_row_i:
+                # swapping
+                mmatrix[[next_pivot_row_i, pivot_row_i]] = mmatrix[[pivot_row_i, next_pivot_row_i]]
+                pivot_row_i = next_pivot_row_i
+
+            # step 3: scale the pivot row, with our pivot value
+            pivot_value = mmatrix[pivot_row_i][col_i]
+            # mmatrix[pivot_row_i] = mmatrix[pivot_row_i] / pivot_value
+            mmatrix[pivot_row_i] = [x/pivot_value for x in mmatrix[pivot_row_i]]
+
+            # step 4: eliminate all the numbers above and below
+
+            for row_i in range(row_len):
+
+                # skip the pivot row
+                if row_i == pivot_row_i:
+                    continue
+
+                # eliminate the column element by rescaling the whole row
+                lead_coefficient = mmatrix[row_i][col_i]
+                # mmatrix[row_i] = mmatrix[row_i] - mmatrix[pivot_row_i] * lead_coefficient
+                coeff_row = [x*lead_coefficient for x in mmatrix[pivot_row_i]]
+                mmatrix[row_i] = [xi-yi for xi,yi in zip(mmatrix[row_i], coeff_row)]
+
+            # step 5: prepare to move to the next column
+            locked_rows.append(pivot_row_i)
+
+        return mmatrix
