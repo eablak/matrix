@@ -228,3 +228,81 @@ class Matrix:
             locked_rows.append(pivot_row_i)
 
         return mmatrix
+
+
+    def determinant(self):
+
+        matrix_dim_size = len(self.matrix)
+
+        if matrix_dim_size == 1:
+            return self.matrix[0][0]
+        
+        elif matrix_dim_size == 2:
+            # detA = a.d -b.c
+            return self.matrix[0][0] * self.matrix[1][1] - self.matrix[0][1] * self.matrix[1][0]
+
+        elif matrix_dim_size == 3:
+            
+            # sarrus method
+
+            self.matrix.append(self.matrix[0])
+            self.matrix.append(self.matrix[1])
+
+            right_total = 0
+            left_total = 0
+
+            k = 0
+            for i in range(3):
+                l = k
+                m = 2
+                right_row = 1
+                left_row = 1
+                for j in range(3):
+                    right_row *= self.matrix[l][j]
+                    left_row *= self.matrix[l][m]
+                    m-=1
+                    l+=1
+                k += 1
+                right_total += right_row
+                left_total += left_row
+
+            return right_total - left_total
+        
+        elif matrix_dim_size == 4:
+            
+            # det = a11*A11 + a12*A12 + a13*A13 + a14*A14
+
+            a11 = self.matrix[0][0]
+            a12 = self.matrix[0][1]
+            a13 = self.matrix[0][2]
+            a14 = self.matrix[0][3]
+
+            A11 = (-1) ** (1+1)
+            A12 = (-1) ** (1+2)
+            A13 = (-1) ** (1+3)
+            A14 = (-1) ** (1+4)
+
+            temp = self.matrix
+            temp.pop(0)
+
+            A11_matrix, A12_matrix, A13_matrix, A14_matrix = [row[:] for row in temp], [row[:] for row in temp], [row[:] for row in temp], [row[:] for row in temp]
+
+            for row in A11_matrix:
+                row.pop(0)
+            for row in A12_matrix:
+                row.pop(1)
+            for row in A13_matrix:
+                row.pop(2)
+            for row in A14_matrix:
+                row.pop(3)
+
+            detA11 = Matrix(A11_matrix).determinant()
+            detA12 = Matrix(A12_matrix).determinant()
+            detA13 = Matrix(A13_matrix).determinant()
+            detA14 = Matrix(A14_matrix).determinant()
+
+            result = (a11 * A11 * detA11) + (a12 * A12 * detA12) + (a13 * A13 * detA13) + (a14 * A14 * detA14)
+            return result
+        
+        else:
+            raise TypeError("Result is undefined")
