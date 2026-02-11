@@ -306,3 +306,50 @@ class Matrix:
         
         else:
             raise TypeError("Result is undefined")
+        
+
+    def eliminate(self, base_row, target_row, column, target=0):
+        # subtract target row from base row by multiplied with cofactor 
+        coffactor = (target_row[column] - target) / base_row[column]
+        for i in range(len(target_row)):
+            target_row[i] -= coffactor * base_row[i]
+
+
+    def inverse(self):
+
+        # combine with identity matrix
+        combine_matix = [[] for i in self.matrix] 
+        for i,row in enumerate(self.matrix):
+            combine_matix[i].extend(row + [0]*i + [1] + [0]*(len(self.matrix)-i-1))
+
+
+        # Gauss-Jordan elimination
+
+        for i in range(len(combine_matix)):
+            # if target element is 0, swap it (you can't make it 1)
+            if combine_matix[i][i] == 0:
+                for j in range(i+1, len(combine_matix)):
+                    if combine_matix[j][i] != 0:
+                        combine_matix[i], combine_matix[j] = combine_matix[j], combine_matix[i]
+                        break
+                else:
+                    raise ValueError("Matrix is not invertible")
+            # make 0 bottom left triangle
+            for j in range(i+1, len(combine_matix)):
+                self.eliminate(combine_matix[i], combine_matix[j], i)
+
+        # make 0 upper right triangle
+        for i in range(len(combine_matix)-1, -1, -1):
+            for j in range(i-1, -1, -1):
+                self.eliminate(combine_matix[i], combine_matix[j], i)
+
+        # make the diagonal values to 1
+        for i in range(len(combine_matix)):
+            self.eliminate(combine_matix[i], combine_matix[i], i, target=1)
+
+        # turn as a original matrix
+        combine_matix = [combine_matix[i][len(combine_matix[i])//2:] for i in range(len(combine_matix))]
+        for i, row in enumerate(combine_matix):
+            self.matrix[i] = row
+
+        return self.matrix
