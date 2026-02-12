@@ -202,7 +202,7 @@ class Matrix:
 
             if pivot_row_i != next_pivot_row_i:
                 # swapping
-                mmatrix[[next_pivot_row_i, pivot_row_i]] = mmatrix[[pivot_row_i, next_pivot_row_i]]
+                mmatrix[pivot_row_i], mmatrix[next_pivot_row_i] = mmatrix[next_pivot_row_i], mmatrix[pivot_row_i]
                 pivot_row_i = next_pivot_row_i
 
             # step 3: scale the pivot row, with our pivot value
@@ -353,3 +353,14 @@ class Matrix:
             self.matrix[i] = row
 
         return self.matrix
+    
+    def rank(self):
+        
+        echelon_format = self.row_echelon()
+        rank = 0
+
+        for row in echelon_format:
+            if any(i != 0 for i in row):
+                rank += 1
+            
+        return rank
