@@ -139,7 +139,7 @@ class Vector:
         
         res = 0
         for elem in self.vector:
-            res += pow(elem,2)
+            res += elem*elem
 
         return res ** 0.5
     
