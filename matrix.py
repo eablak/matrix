@@ -1,6 +1,3 @@
-import sys
-import os
-
 class Matrix:
 
     def __init__(self, matrix):
